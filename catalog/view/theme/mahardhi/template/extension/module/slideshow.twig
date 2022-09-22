@@ -1,0 +1,52 @@
+<div class="slideshow">
+	<div class="swiper-viewport">
+		<div id="slideshow{{ module }}" class="swiper-container">
+			<div class="swiper-wrapper">
+				{% for banner in banners %}
+					<div class="swiper-slide text-center {{ banner.title }}">
+						{% if banner.link %}
+							<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>
+						{% else %}
+							<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />
+						{% endif %}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="container pagination-inner clearfix">
+			<div class="swiper-pagination slideshow{{ module }}"></div>
+		</div>
+		<div class="swiper-pager">
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+var swiper = new Swiper("#slideshow{{ module }}", {
+	mode: 'horizontal',
+	slidesPerView: 1,
+	spaceBetween: 0,
+	loop: true,
+	paginationClickable: true, 
+	autoplayDisableOnInteraction: true,
+	effect: "fade",
+	autoplay: {
+	    delay: 4000,
+	},
+	navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    pagination: {
+      	el: ".swiper-pagination",
+      	clickable: true,
+     	renderBullet: function (index, className) {
+        	return '<span class="' + className + '">' + (index + 1) + "</span>";
+      	},
+    },
+});
+
+</script>

@@ -1,0 +1,57 @@
+<div class="news col-md-9">
+	<div class="newsletterblock">
+		<div class="newsletter-form block-content">
+			<div class="news-info">
+				<div class="news-dec">
+					<i class="icon-mail1"></i>
+					<div class="title-text">{{ newsletter_title }}</div>
+					<div class="news-description hidden">{{ newsletter_description }}</div>
+				</div>
+			</div>
+			<!-- newsletter box -->
+			<form name="frmnewsletter" id="frmnewsletter" onsubmit="subscribe();return false" method="post">
+				<div class="subscribe-form">
+					<input type="email" name="newsletter_usr_email" id="newsletter_usr_email" placeholder="{{ entry_user_email }}" class="form-control input-lg inputNew txtemail" required>
+					<button type="submit" class="subscribe-btn btn">{{ entry_subscribe }}</button>
+				</div>
+				<!-- newsletter notofication -->
+				<div class="newsletter-message"></div>
+				<!-- newsletter notofication -->
+			</form>
+			<!-- newsletter box -->
+		</div>
+	</div>
+</div>
+<script><!--
+//add 
+function subscribe(){
+	$.ajax({
+		type: 'post',
+		url: 'index.php?route=extension/module/mahardhi_newsletter/subscribe',
+		dataType: 'html',
+		data:$("#frmnewsletter").serialize(),
+		success: function (html) {
+			try {
+				eval(html);
+			}
+			catch (e) {
+			}				
+		}
+	});
+}
+
+// check for validation
+$(document).ready(function() {
+	$('#newsletter_usr_email').keypress(function(e) {
+		if(e.which == 13) {
+			e.preventDefault();
+			subscribe();
+		}	
+	});
+});	
+//--></script>
+
+
+
+
+

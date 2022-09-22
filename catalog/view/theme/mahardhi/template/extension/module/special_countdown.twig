@@ -1,0 +1,144 @@
+<div class="special-countdown col-md-5">
+	<div class="countdown-carousel list-products box-content">
+		<h3 class="page-title toggled hidden">{{ heading_title }}</h3>
+		<div class="block_box countdown-inner">
+				{% set productForSlider = 1 %}
+				{% set productCount = products|length %}
+				<div id="special-count" class="box-product {% if productCount > productForSlider %} special-count-carousel {% endif %} clearfix">
+					{% if productCount > productForSlider %}
+						{% set class = 'col-xs-12' %}
+					{% else %}
+						{% set class = 'col-lg-3 col-md-3 col-sm-6 col-xs-12' %}
+					{% endif %}
+					{% for product in products %}
+					{% if product.to_date  !=  '0000-00-00' %}
+					<div class="product-layouts {{class}}">
+			    		<div class="product-thumb transition">
+							<div class="image countdown-images">
+								<div class="special-image">
+									{% if product.thumb_swap %}
+										<a href="{{ product.href }}">
+											<img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" />
+											<img class="img-responsive hover-img" src="{{ product.thumb_swap }}" title="{{ product.name }}" alt="{{ product.name }}"/>
+										</a>
+									{% else %}
+										<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a>
+									{% endif %}
+									{# {% if  product.special %}
+										<div class="sale-text"><span class="section-sale">{{ text_sale }}</span></div>
+									{% endif %}	#}
+
+									{% if product.to_date !=  '0000-00-00' %}
+									{% set date_time = product.to_date|date('Y-m-d') %}
+										<div id="countdown_{{ product.product_id }}" class="item-countdown aa" data-date="{{ date_time }}"></div>
+									{% endif %}
+									<div class="button-group">
+										<button type="button" class="wishlist" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="icon-heart"></i></button>
+										<button type="button" data-toggle="tooltip" class="quickview-button" title="{{ button_quickview }}" onclick="quickView.ajaxView('?route=product/quickview&product_id={{ product.product_id }}');"><i class="icon-eye"></i></button>
+										<button type="button" class="compare" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="icon-change"></i></button>
+									</div>								
+								</div>
+							</div>
+							
+							<div class="thumb-description">
+								<div class="product-description">
+									<div class="caption">
+										<div class="special-count-text">{{ text_special_count }}</div>
+										<h4 class="special-title"><a href="{{ product.href }}">{{ product.name }}</a></h4>
+										
+										<p class="description">{{ product.description }}</p>
+										
+										{% if product.to_date !=  '0000-00-00' %}
+										{% set date_time = product.to_date|date('Y-m-d') %}
+											<div id="countdown_{{ product.product_id }}" class="item-countdown" data-date="{{ date_time }}"></div>
+										{% endif %}
+
+										{# {% if product.price %}
+											<div class="price_count">
+											  {% if not product.special %}
+											  	{{ product.price }}
+											  {% else %}
+												  <span class="price-new">{{ product.special }}</span> 
+												  <span class="price-old">{{ product.price }}</span>
+											  {% endif %}
+											  {% if product.tax %}
+											  	<span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+											  {% endif %}
+											
+											</div>
+										{% endif %}
+										{% if product.rating %}
+											<div class="rating">
+												{% for i in 1..5 %}
+													{% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
+												{% endfor %}
+											</div>
+										{% else %}
+											<div class="rating">
+												{% for i in 1..5 %}
+													<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+												{% endfor %}
+											</div>
+										{% endif %} #}
+									</div>
+								
+									<div class="button-groups">
+										<button class="btn-cart btn{% if product.product_quantity<=0 %} {{ "disabled" }} {% endif %}" type="button" title="{% if product.product_quantity <=0 %}{{ product.product_stock }}{% else %}{{ button_cart }}{% endif %}" onclick="{% if product.product_quantity <=0 %}{% else %}cart.add('{{ product.product_id }}'){% endif %}"{% if product.product_quantity <=0 %}{{ "" }} {% endif %}>
+										 {% if product.product_quantity <=0 %}
+											{{ "<span class=\"out of stock\">"~product.product_stock }}
+											{% else %} 
+											{{ "<i class=\"fa fa-shopping-cart\"></i> <span>"~button_cart }}
+										{% endif %}
+										</span>
+										</button>
+									</div>
+								</div>
+							</div>
+							{% set date_time = product.to_date|date('Y-m-d') %}
+								<script type="text/javascript">
+								  jQuery(document).ready(function($){
+								  $(".item-countdown").each(function(){
+								  var date = $(this).data('date');
+								  $(this).lofCountDown({
+									  TargetDate:date,
+									  DisplayFormat:"<div>%%D%% <span>{{ text_days }}</span></div><div>%%H%% <span>{{ text_hours }}</span></div><div>%%M%% <span>{{ text_minutes }}</span></div><div>%%S%% <span>{{ text_seconds }}</span></div>"
+									});
+								  });
+								  });   
+							 </script> 		  
+						</div>
+					</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	// Additional images
+	const additional1 = $('html').attr('dir');
+	setTimeout(function(){
+	$('.special-count-carousel').each(function () {
+		if ($(this).closest('#column-left').length == 0 && $(this).closest('#column-right').length == 0) {
+			$(this).addClass('owl-carousel owl-theme');
+			const items = $(this).data('items') || 1;
+			const sliderOptions = {
+				loop: false,
+				nav: false,
+				navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+				dots: false,
+				items: items,
+				responsiveRefreshRate: 200,
+				responsive: {
+					0: { items:1 },
+					992: { items:1 }
+				}
+			};
+			if (additional1 == 'rtl') sliderOptions['rtl'] = true;
+			$(this).owlCarousel(sliderOptions);
+		}
+	});	
+	}, 500);
+
+</script>

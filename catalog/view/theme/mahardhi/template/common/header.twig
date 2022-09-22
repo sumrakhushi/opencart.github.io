@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{{ title }}</title>
+	<base href="{{ base }}" />
+	{% if description %}
+		<meta name="description" content="{{ description }}" />
+	{% endif %}
+	{% if keywords %}
+		<meta name="keywords" content="{{ keywords }}" />
+	{% endif %}
+	<script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js"></script>
+	<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+	<script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js"></script>
+	<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	
+	{# Mahardhi Edit #}
+	<script src="catalog/view/javascript/mahardhi/jquery.elevateZoom.min.js"></script>
+	<script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js"></script>
+	<script src="catalog/view/javascript/mahardhi/owl.carousel.min.js"></script>
+	<script type="text/javascript" src="catalog/view/javascript/mahardhi/quickview.js"></script>	
+	<link href="catalog/view/theme/mahardhi/stylesheet/mahardhi/mahardhi-font.css" rel="stylesheet">
+	<link href="catalog/view/theme/mahardhi/stylesheet/mahardhi/animate.min.css" rel="stylesheet">
+	<link href="catalog/view/theme/mahardhi/stylesheet/mahardhi/owl.carousel.min.css" rel="stylesheet">
+	<link href="catalog/view/theme/mahardhi/stylesheet/mahardhi/owl.theme.default.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/magnific/magnific-popup.css">
+	{# End #}
+
+	<script type="text/javascript" src="catalog/view/javascript/mahardhi/slick.js"></script>	
+	<link href="catalog/view/theme/mahardhi/stylesheet/mahardhi/slick.css" rel="stylesheet">
+
+	{% if advanceSearch %}
+	  <script src="catalog/view/javascript/mahardhi/mahardhi_search.js"></script>
+	{% endif %}
+	{{ inline_style }}
+	<link href="catalog/view/theme/mahardhi/stylesheet/stylesheet.css" rel="stylesheet">
+	{% for style in styles %}
+		<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+	{% endfor %}
+	{# Mahardhi Edit #}
+	{% if direction == 'rtl' %}
+		<link href="catalog/view/theme/mahardhi/stylesheet/mahardhi/rtl.css" rel="stylesheet">
+	{% endif %}
+	{# End #}
+	{% for script in scripts %}
+		<script src="{{ script }}"></script>
+	{% endfor %}
+	<script src="catalog/view/javascript/common.js"></script>
+	{# Mahardhi Edit #}
+	<script src="catalog/view/javascript/mahardhi/jquery-ui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="catalog/view/theme/mahardhi/stylesheet/mahardhi/jquery-ui.min.css">
+	<script src="catalog/view/javascript/mahardhi/custom.js"></script>	
+	{# End #}
+	{% for link in links %}
+		<link href="{{ link.href }}" rel="{{ link.rel }}" />
+	{% endfor %}
+	{% for analytic in analytics %}
+		{{ analytic }}
+	{% endfor %}
+</head>
+<body class="{{ class }}">
+	<div class="loader"></div>
+	<div class="header-main">
+		<header>
+			<div class="container">
+				<div class="row">
+					<div class="header-top">
+						<div class="header-left col-lg-4 hidden-xs hidden-sm">	
+							<!-- start menu -->			
+							{{menu}}				
+						</div>
+							
+						<div class="header-center col-lg-4">
+							<!-- start logo -->
+					        <div id="logo">
+								{% if logo %}
+									<a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
+								{% else %}
+									<h1><a href="{{ home }}">{{ name }}</a></h1>
+								{% endif %}
+							</div>
+						</div>
+
+						<div class="header-right header-links col-lg-4">	
+							<!-- start search -->
+							<div class="btn_search">
+								<a class="search-btn">
+							        <i class="search-icon icon-search"></i>
+							    </a>						
+							</div>
+
+							<!-- start account -->	
+							<div id="header_ac" class="dropdown">
+								<a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown">
+									<span class="hidden">{{ text_account }}</span><i class="icon-user"></i>
+								</a>
+								<ul class="dropdown-menu dropdown-menu-right account-link-toggle">
+									{% if logged %}
+										<li><a href="{{ account }}">{{ text_account }}</a></li>
+										<li><a href="{{ order }}">{{ text_order }}</a></li>
+										<li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+										<li><a href="{{ download }}">{{ text_download }}</a></li>
+										<li><a href="{{ logout }}">{{ text_logout }}</a></li>								
+									{% else %}
+										<li><a href="{{ register }}">{{ text_register }}</a></li>
+										<li><a href="{{ login }}">{{ text_login }}</a></li>								
+									{% endif %}	
+									<li> <a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}">{{ text_wishlist }}</a></li>
+							        <li class="language">{{ language }}</li>    
+			        				<li class="currency">{{ currency }}</li>					
+								</ul>
+							</div>
+
+							<!-- start cart -->			
+							<div class="header_cart">{{ cart }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="header-search">
+				{{ search }}
+				<i class="serach-close icon-close"></i>
+			</div>
+		</header>
+	</div>
+
+<script><!--
+	$(document).ready(function(){
+		var headerfixed = {{ header }};
+		if (headerfixed == 1) {
+			$(window).scroll(function () {
+				if ($(window).width() > 991) {
+					if ($(this).scrollTop() > 110) {
+						$('header').addClass('header-fixed');
+							} else {
+						$('header').removeClass('header-fixed');
+					}
+				}
+				else{
+					$('header').removeClass('header-fixed');
+				}
+			});
+		}
+		else{		
+			$('header').removeClass('header-fixed');
+		}
+	});
+</script>

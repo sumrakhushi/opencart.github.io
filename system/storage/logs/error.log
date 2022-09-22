@@ -1,0 +1,1 @@
+2021-10-25 7:31:26 - PHP Warning:  mysqli::__construct(): (HY000/1049): Unknown database 'opencart' in C:\xampp\htdocs\opencart\system\library\db\mysqli.php on line 8

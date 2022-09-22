@@ -1,0 +1,75 @@
+<div class="category-featured mt-100">
+	<div class="container">
+		<div class="box-heading">
+		<div class="category-title">
+			<h3 class="page-title">{{ heading_title }}</h3>
+			<div class="cat-sub-title">{{ text_sub_title }}</div>
+		</div>
+			<div class="category-box">
+				<div class="row">
+					<div class="category-feature-list">
+						{% set categoryForSlider = 1 %}
+						{% set categoryCount = categories|length %}
+						<div id="category-carousel" class="box-category {% if categoryCount > categoryForSlider %} category-carousel {% endif %} clearfix" data-items="3">						
+							{% set categoryCount = categories|length %}
+							{% if categoryCount > categoryForSlider %}
+							{% set class = ' col-xs-12' %}
+							{% else %}
+							{% set class = ' col-lg-4  col-md-4  col-sm-4  col-xs-4' %}
+							{% endif %}
+							{% for category in categories %}
+							<div class="category-layout {{class}}">
+								<div class="category-thumb">
+									<h4 class="cat-title">
+										<a href="{{ category.href }}" class="category-name">{{ category.name }}</a>
+									</h4>
+									<div class="images-hover image">
+										<a href="{{ category.href }}">
+											<img src="{{ category.thumb }}" alt="{{ category.name }}" title="{{ category.name }}" class="img-responsive" />
+										</a>
+									</div>
+									<div class="caption">
+										<div class="category-description">
+											<div class="number-product">{{ category.count }} {{ text_cat_item }}</div>
+										</div>
+								  	</div>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+ <script>
+// set slider
+const dirCategory = $('html').attr('dir');
+
+$('.category-carousel').each(function () {
+	if ($(this).closest('#column-left').length == 0 && $(this).closest('#column-right').length == 0) {
+		$(this).addClass('owl-carousel owl-theme');
+			const items = $(this).data('items') || 3;
+			const sliderOptions = {
+				loop: false,
+				rewind: true,
+				nav: true,
+				navText: ['<i class="fa fa-angle-double-left"></i> Prev','Next <i class="fa fa-angle-double-right"></i>'],
+				dots: false,
+				items: items,
+				autoplay: false,
+				autoplayTimeout: 3000,
+				responsiveRefreshRate: 200,
+				responsive: {
+				0: { items: 1 },
+				320: { items: 2 },
+				541: { items: 2 },
+				992: { items: items }
+			}
+		};
+		if (dirCategory == 'rtl') sliderOptions['rtl'] = true;
+		$(this).owlCarousel(sliderOptions);
+	}
+});
+</script>
